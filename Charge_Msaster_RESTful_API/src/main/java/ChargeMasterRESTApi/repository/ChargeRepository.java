@@ -1,5 +1,9 @@
 package ChargeMasterRESTApi.repository;
 
-public interface ChargeRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import ChargeMasterRESTApi.model.Charge;
+
+public interface ChargeRepository extends JpaRepository<Charge, Long> {
 
 }

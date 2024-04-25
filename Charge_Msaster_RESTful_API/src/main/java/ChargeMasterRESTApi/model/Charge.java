@@ -2,6 +2,9 @@ package ChargeMasterRESTApi.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,12 +12,22 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Entity
 @Table(name="ChargeDetails")
 public class Charge {
 	//for alphabet [A-Z,a-z]
 		private final String REGEX_PATTERN = "^[a-zA-Z0-9\\\\s]*$";
-		private final String REGEX_PATTERN_AMOUNT_PERCENTAGE="^(\\\\d+(\\\\.\\\\d{1,2})?|100(?:\\\\.0{1,2})?)%?$\r\n";
+		private final String REGEX_PATTERN_AMOUNT_PERCENTAGE="^(\\\\d+(\\\\.\\\\d{1,2})?|100(?:\\\\.0{1,2})?)%?$\r\n$";
 				
 		@Id
 		@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,7 +47,7 @@ public class Charge {
 		private String chargeType;
 		
 		@Column(name="amount_percentage")
-		@Pattern(regexp = REGEX_PATTERN_AMOUNT_PERCENTAGE,message = "Wrong Pattern")
+		//@Pattern(regexp = REGEX_PATTERN_AMOUNT_PERCENTAGE,message = "Wrong Pattern")
 		private String amountPercentage;
 		
 		@Column(name="applicable_tax")
@@ -59,9 +72,11 @@ public class Charge {
 		private boolean isExcluded;
 		
 		@Column(name="from_date")
+		@JsonFormat(pattern = "yyyy-MM-dd")
 		private LocalDate fromDate;
-		
+		    
 		@Column(name="to_date")
+		@JsonFormat(pattern = "yyyy-MM-dd")
 		private LocalDate toDate;
 		
 		@Column(name="anchor_tag")
